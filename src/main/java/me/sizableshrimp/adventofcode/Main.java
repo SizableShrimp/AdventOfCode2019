@@ -1,12 +1,12 @@
 package me.sizableshrimp.adventofcode;
 
+import me.sizableshrimp.adventofcode.helper.DateGrabber;
 import me.sizableshrimp.adventofcode.templates.Day;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Modifier;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.ZoneId;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -20,7 +20,7 @@ public class Main {
     }
 
     private static void run() {
-        LocalDateTime time = LocalDateTime.now(ZoneId.of("America/New_York"));
+        LocalDateTime time = DateGrabber.estTime();
         int dayOfMonth = time.getDayOfMonth();
 
         compile();

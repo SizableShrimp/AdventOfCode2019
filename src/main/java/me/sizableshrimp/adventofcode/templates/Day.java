@@ -1,13 +1,10 @@
 package me.sizableshrimp.adventofcode.templates;
 
 import lombok.Getter;
+import me.sizableshrimp.adventofcode.helper.DataReader;
 
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.Scanner;
 
 /**
  * A single day which has two challenges to solve.
@@ -30,27 +27,11 @@ public abstract class Day {
      * 5
      * }</pre>
      * would be parsed as {"1", "2", "3", "4", "5"}.
+     * <p>
+     * <b>NOTE:</b> This variable is assigned using {@link DataReader#read}, which means it has the possibility to hit
+     * the Advent Of Code servers to request the input data. See {@link DataReader#read} for more details.
      */
-    protected final List<String> lines = new ArrayList<>();
-
-    public Day() {
-        initialize("/days/"+getClass().getSimpleName().toLowerCase(Locale.ROOT) + ".txt");
-    }
-
-    public Day(String filename) {
-        initialize(filename);
-    }
-
-    private void initialize(String filename) {
-        InputStream stream = getClass().getResourceAsStream(filename);
-        if (stream == null)
-            return;
-        try (Scanner scan = new Scanner(stream)) {
-            while (scan.hasNextLine()) {
-                lines.add(scan.nextLine());
-            }
-        }
-    }
+    protected final List<String> lines = DataReader.read(getClass());
 
     /**
      * Execute a given day; outputting part 1, part 2, and the time taken.
