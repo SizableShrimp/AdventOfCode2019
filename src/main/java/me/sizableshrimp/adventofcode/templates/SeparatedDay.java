@@ -1,5 +1,10 @@
 package me.sizableshrimp.adventofcode.templates;
 
+/**
+ * A {@link Day} which has both parts of the challenge separated into different internal methods.
+ * This might be applied to a completed day after I have solved it and believe it would promote readability to
+ * separate the parts.
+ */
 public abstract class SeparatedDay extends Day {
 
     /**

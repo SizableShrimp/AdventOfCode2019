@@ -9,6 +9,11 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * A single day which has two challenges to solve.
+ * There are 25 days in <a href="http://adventofcode.com">Advent Of Code</a>.
+ * Each day has two parts to it to solve the entire day.
+ */
 public abstract class Day {
 
     @Getter
