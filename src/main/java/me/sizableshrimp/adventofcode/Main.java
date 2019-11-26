@@ -34,7 +34,7 @@ public class Main {
     }
 
     private static Day getDay(int dayOfMonth) {
-        Class<? extends Day> clazz = days.get("Day" + dayOfMonth);
+        Class<? extends Day> clazz = days.get("Day" + pad(dayOfMonth));
         if (clazz == null)
             return null;
         System.out.println("Day " + dayOfMonth + ":");
@@ -58,5 +58,9 @@ public class Main {
         days = new Reflections(Main.class.getPackageName()).getSubTypesOf(Day.class).stream()
                 .filter(c -> !Modifier.isAbstract(c.getModifiers()))
                 .collect(Collectors.toMap(Class::getSimpleName, Function.identity()));
+    }
+
+    private static String pad(int i) {
+        return String.format("%02d", i);
     }
 }

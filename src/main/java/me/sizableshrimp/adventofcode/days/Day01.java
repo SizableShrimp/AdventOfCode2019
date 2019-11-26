@@ -2,7 +2,7 @@ package me.sizableshrimp.adventofcode.days;
 
 import me.sizableshrimp.adventofcode.templates.Day;
 
-public class Day1 extends Day {
+public class Day01 extends Day {
 
     @Override
     protected void evaluate() {
