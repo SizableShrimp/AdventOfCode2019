@@ -1,2 +1,10 @@
-# Project exclude paths
-/target/
+# Intellij
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Maven
+log/
+target/
+dependency-reduced-pom.xml
