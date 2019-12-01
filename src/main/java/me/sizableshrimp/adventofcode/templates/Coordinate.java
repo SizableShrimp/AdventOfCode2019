@@ -8,7 +8,7 @@ import lombok.Value;
 @Value
 public class Coordinate {
 
-    int x, y;
+    public int x, y;
 
     /**
      * Creates a new {@link Coordinate} based on the offset of x and y given in parameters added to the current
@@ -28,6 +28,18 @@ public class Coordinate {
 
     public int distance(Coordinate other) {
         return Math.abs(x - other.x) + Math.abs(y - other.y);
+    }
+
+    public static Coordinate parse(String coord) {
+        try {
+            String[] arr = coord.split(",");
+            int x = Integer.parseInt(arr[0]);
+            int y = Integer.parseInt(arr[1]);
+            return new Coordinate(x, y);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return new Coordinate(0, 0);
+        }
     }
 
     @Override
