@@ -23,13 +23,7 @@ public class ListConvert {
 
     public static List<Character> chars(List<String> list) {
         return list.stream()
-                .flatMap(s -> chars(s).stream())
-                .collect(Collectors.toList());
-    }
-
-    public static List<Character> chars(String s) {
-        return s.chars()
-                .mapToObj(i -> (char) i)
+                .flatMap(s -> LineConvert.chars(s).stream())
                 .collect(Collectors.toList());
     }
 
