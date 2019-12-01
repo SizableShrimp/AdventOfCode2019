@@ -5,6 +5,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ListConvert {
+
+    /**
+     * Parse all lines to integers.
+     * <b>NOTE: Not the same as {@link LineConvert#ints}</b>
+     * @return A list of parsed integers.
+     */
     public static List<Integer> ints(List<String> list) {
         return convert(list, Integer::valueOf);
     }
