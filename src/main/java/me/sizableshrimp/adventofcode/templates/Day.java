@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2019 SizableShrimp.
+ * This file is provided under version 3 of the GNU Lesser General Public License.
+ */
+
 package me.sizableshrimp.adventofcode.templates;
 
 import lombok.Getter;
