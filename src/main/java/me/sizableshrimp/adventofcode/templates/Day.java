@@ -36,7 +36,7 @@ public abstract class Day {
      * <b>NOTE:</b> This variable is assigned using {@link DataReader#read}, which means it has the possibility to hit
      * the Advent Of Code servers to request the input data. See {@link DataReader#read} for more details.
      */
-    protected List<String> lines = DataReader.read(getClass());
+    protected List<String> lines = DataReader.read(Integer.parseInt(getClass().getSimpleName().substring(3)));
 
     /**
      * Execute a given day; outputting part 1, part 2, and the time taken.

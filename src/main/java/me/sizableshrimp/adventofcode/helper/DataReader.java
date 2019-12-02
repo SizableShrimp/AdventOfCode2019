@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,11 +42,11 @@ public class DataReader {
      * run directory under a "days" subfolder in case of later usage. The data fetched from the server originally is
      * then returned in an unmodifiable list.
      *
-     * @param clazz The {@link Day} class of which to read input data.
+     * @param day The integer day of which to read input data.
      * @return An unmodifiable list of strings representing each line of input data.
      */
-    public static List<String> read(Class<? extends Day> clazz) {
-        Path path = getPath(clazz);
+    public static List<String> read(int day) {
+        Path path = getPath(day);
         List<String> lines = getDataFromFile(path);
 
         if (lines != null)
@@ -56,7 +55,7 @@ public class DataReader {
         if (System.getenv("AOC_SESSION") == null)
             return List.of();
 
-        return getDataFromServer(getNumber(clazz), Main.year, path);
+        return getDataFromServer(day, Main.year, path);
     }
 
     /**
@@ -109,9 +108,9 @@ public class DataReader {
         return null;
     }
 
-    private static Path getPath(Class<? extends Day> clazz) {
-        String filename = clazz.getSimpleName().toLowerCase(Locale.ROOT) + ".txt";
-        URL url = clazz.getResource("/days/" + filename);
+    private static Path getPath(int day) {
+        String filename = "day" + Main.pad(day) + ".txt";
+        URL url = Main.class.getResource("/days/" + filename);
         if (url == null) {
             return getBasePath(filename);
         }
@@ -134,10 +133,6 @@ public class DataReader {
                 e.printStackTrace();
             }
         }).start();
-    }
-
-    private static int getNumber(Class<? extends Day> clazz) {
-        return Integer.parseInt(clazz.getSimpleName().substring(3));
     }
 
     private static Path getBasePath(String filename) {
