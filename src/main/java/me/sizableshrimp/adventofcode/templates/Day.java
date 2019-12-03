@@ -17,7 +17,6 @@ import java.util.Objects;
  * Each day has two parts to it to solve the entire day.
  */
 public abstract class Day {
-
     @Getter
     private String part1;
     @Getter

@@ -18,7 +18,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
-
     private static Map<String, Class<? extends Day>> days =
             new Reflections(Main.class.getPackageName()).getSubTypesOf(Day.class).stream()
                     .filter(c -> !Modifier.isAbstract(c.getModifiers()))

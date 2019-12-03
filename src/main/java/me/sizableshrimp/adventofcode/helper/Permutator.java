@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 public class Permutator {
-
     public static <T> Set<List<T>> permute(List<T> base) {
         if (base.isEmpty()) {
             Set<List<T>> perms = new HashSet<>();

@@ -9,7 +9,6 @@ import me.sizableshrimp.adventofcode.helper.ListConvert;
 import me.sizableshrimp.adventofcode.templates.SeparatedDay;
 
 public class Day01 extends SeparatedDay {
-
     @Override
     protected Object part1() {
         return ListConvert.ints(lines).stream()

@@ -13,12 +13,11 @@ import lombok.Value;
  */
 @Value
 public class Coordinate {
-
     public int x, y;
 
     @AllArgsConstructor
     public enum Direction {
-        NORTH(0, 0, -1), EAST(90, 1, 0), SOUTH(180, 0, 1), WEST(270, -1, 0);
+        NORTH(0, 0, 1), EAST(90, 1, 0), SOUTH(180, 0, -1), WEST(270, -1, 0);
 
         public int degrees;
         public int x;
@@ -97,6 +96,6 @@ public class Coordinate {
 
     @Override
     public String toString() {
-        return x + "," + y;
+        return "(" + x + "," + y + ")";
     }
 }

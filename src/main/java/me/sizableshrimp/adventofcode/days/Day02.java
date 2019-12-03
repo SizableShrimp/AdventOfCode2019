@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Day02 extends SeparatedDay {
-
     List<Integer> baseInstructions;
 
     @Override
@@ -50,46 +49,28 @@ public class Day02 extends SeparatedDay {
         int b = instructions.get(position + 1);
         int c = instructions.get(position + 2);
         int d = instructions.get(position + 3);
-        if (a == 99)
+        int calculate = calculate(instructions, a, b, c, d);
+        if (calculate == -1)
             return;
+        doInstruction(instructions, calculate);
+    }
+
+    int calculate(List<Integer> input, int a, int b, int c, int d) {
+        if (!inBounds(input, b, c, d) || a == 99)
+            return -1;
         if (a == 1) {
-            if (!one.calculate(instructions, b, c, d))
-                return;
+            input.set(c, input.get(a) + input.get(b));
         } else {
-            if (!two.calculate(instructions, b, c, d))
-                return;
+            input.set(c, input.get(a) * input.get(b));
         }
-        doInstruction(instructions, position + 4);
+        return a + 4;
     }
 
-    final OPCode one = (input, a, b, c) -> {
-        if (!inBounds(input, a))
-            return false;
-        if (!inBounds(input, b))
-            return false;
-        if (!inBounds(input, c))
-            return false;
-        input.set(c, input.get(a) + input.get(b));
+    boolean inBounds(List<Integer> input, int... positions) {
+        for (int i : positions) {
+            if (i < 0 || i >= input.size())
+                return false;
+        }
         return true;
-    };
-    final OPCode two = (input, a, b, c) -> {
-        if (!inBounds(input, a))
-            return false;
-        if (!inBounds(input, b))
-            return false;
-        if (!inBounds(input, c))
-            return false;
-        input.set(c, input.get(a) * input.get(b));
-        return true;
-    };
-
-    boolean inBounds(List<Integer> input, int position) {
-        return position >= 0 && position < input.size();
-    }
-
-    @FunctionalInterface
-    private interface OPCode {
-
-        boolean calculate(List<Integer> input, int a, int b, int c);
     }
 }

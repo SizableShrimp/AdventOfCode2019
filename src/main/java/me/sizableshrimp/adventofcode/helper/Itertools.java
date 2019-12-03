@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 
 //see Python Itertools
 public class Itertools {
-
     public static <T> List<List<T>> product(List<T>... lists) {
         return product(1, lists);
     }

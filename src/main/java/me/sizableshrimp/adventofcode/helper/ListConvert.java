@@ -10,7 +10,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ListConvert {
-
     /**
      * Parse all lines to integers.
      * <b>NOTE: Not the same as {@link LineConvert#ints}</b>

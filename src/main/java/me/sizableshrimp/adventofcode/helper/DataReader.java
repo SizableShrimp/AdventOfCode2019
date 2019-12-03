@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DataReader {
-
     /**
      * The read method is used to locate input data for a specified {@link Day}.
      * <p>

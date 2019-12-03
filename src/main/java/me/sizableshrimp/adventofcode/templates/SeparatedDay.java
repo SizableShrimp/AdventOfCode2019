@@ -11,7 +11,6 @@ package me.sizableshrimp.adventofcode.templates;
  * separate the parts.
  */
 public abstract class SeparatedDay extends Day {
-
     /**
      * @return The result of part 1
      */

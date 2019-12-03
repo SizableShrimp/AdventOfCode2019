@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class LineConvert {
-
     public static List<String> testInput(String lines) {
         return Arrays.asList(lines.split("\n"));
     }

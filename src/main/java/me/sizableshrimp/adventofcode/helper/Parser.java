@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-
     private static final Pattern pattern = Pattern.compile("(\\d+,\\d+)");
 
     /**
