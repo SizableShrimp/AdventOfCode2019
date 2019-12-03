@@ -35,11 +35,11 @@ public class DataReader {
      * data</u>. This step of the method is optional, and requires an environment variable be set to use it.
      * "AOC_SESSION" must be set as an environment variable, which should hold your session cookie for the
      * <a href="http://adventofcode.com">Advent Of Code Website</a>. This cookie can be found using browser inspection.
-     * If not set, no connection to the server will be attempted at all, and an empty list will be returned.
+     * If not set, an {@link IllegalArgumentException} is thrown.
      * <p>
-     * If a successful connection is made to the AOC server, the input data is stored in a file that is located in the
-     * run directory under a "days" subfolder in case of later usage. The data fetched from the server originally is
-     * then returned in an unmodifiable list.
+     * If a successful connection is made to the AOC servers, the input data is stored in a file that is located in the
+     * working directory inside an "aoc_input" folder in case of later usage. The data fetched from the server
+     * originally is then returned in an unmodifiable list.
      *
      * @param day The integer day of which to read input data.
      * @return An unmodifiable list of strings representing each line of input data.
@@ -52,7 +52,7 @@ public class DataReader {
             return lines;
 
         if (System.getenv("AOC_SESSION") == null)
-            return List.of();
+            throw new IllegalArgumentException("No AOC session cookie found!");
 
         return getDataFromServer(day, Main.year, path);
     }
@@ -135,12 +135,6 @@ public class DataReader {
     }
 
     private static Path getBasePath(String filename) {
-        try {
-            return Path.of(DataReader.class.getProtectionDomain().getCodeSource().getLocation().toURI())
-                    .resolve("days").resolve(filename);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return Path.of("aoc_input").resolve(filename);
     }
 }
