@@ -27,7 +27,7 @@ public class Main {
      * This year integer is only used for retrieving data from the AOC servers with {@link DataReader#read}.
      * Otherwise, it is useless.
      */
-    public static final int year = 2019;
+    public static final int YEAR = 2019;
 
     public static void main(String[] args) {
         run();

@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @Value
 public class Coordinate {
-    public int x, y;
+    public final int x, y;
 
     @AllArgsConstructor
     public enum Direction {
@@ -88,16 +88,17 @@ public class Coordinate {
         return Math.abs(x - other.x) + Math.abs(y - other.y);
     }
 
+    /**
+     * Parses a coordinate in the format "x,y".
+     *
+     * @param coord The input string of which to parse a coordinate.
+     * @return A new {@link Coordinate} object.
+     */
     public static Coordinate parse(String coord) {
-        try {
-            String[] arr = coord.split(",");
-            int x = Integer.parseInt(arr[0]);
-            int y = Integer.parseInt(arr[1]);
-            return new Coordinate(x, y);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return new Coordinate(0, 0);
-        }
+        String[] arr = coord.split(",");
+        int x = Integer.parseInt(arr[0]);
+        int y = Integer.parseInt(arr[1]);
+        return new Coordinate(x, y);
     }
 
     @Override

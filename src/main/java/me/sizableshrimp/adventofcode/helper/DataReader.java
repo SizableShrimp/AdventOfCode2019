@@ -54,7 +54,7 @@ public class DataReader {
         if (System.getenv("AOC_SESSION") == null)
             throw new IllegalArgumentException("No AOC session cookie found!");
 
-        return getDataFromServer(day, Main.year, path);
+        return getDataFromServer(day, Main.YEAR, path);
     }
 
     /**
