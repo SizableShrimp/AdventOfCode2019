@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public class Day04 extends SeparatedDay {
-
     int start;
     int end;
     boolean remove = false;
@@ -52,13 +51,16 @@ public class Day04 extends SeparatedDay {
         if (doubles.size() < 2)
             return;
         Set<Integer> remove = new HashSet<>();
-        for (int i = 0; i < doubles.size(); i++) {
-            int index = doubles.get(i);
+        for (int index : doubles) {
             char c = input.charAt(index);
+            //ensure that the indices are within range
             char before = index - 1 >= 0 ? input.charAt(index - 1) : 'a';
             char after = index + 2 < input.length() ? input.charAt(index + 2) : 'a';
-            if (before == c || after == c) {
-                remove.addAll(Set.of(before == c ? index - 1 : -1, index, index + 1, after == c ? index + 2 : -1));
+            boolean b = before == c;
+            boolean a = after == c;
+            if (b || a) {
+                //only remove those that matched
+                remove.addAll(Set.of(b ? index - 1 : -1, index, index + 1, a ? index + 2 : -1));
             }
         }
         doubles.removeAll(remove);
