@@ -38,13 +38,13 @@ public class Main {
         int dayOfMonth = time.getDayOfMonth();
 
         if (time.getMonth() == Month.DECEMBER && dayOfMonth <= 25) {
-            runDay(dayOfMonth);
+            run(dayOfMonth);
         } else {
             runAll();
         }
     }
 
-    private static void runDay(int dayOfMonth) {
+    private static void run(int dayOfMonth) {
         Class<? extends Day> clazz = days.get("Day" + pad(dayOfMonth));
         if (clazz == null)
             return;
@@ -58,7 +58,7 @@ public class Main {
 
     private static void runAll() {
         for (int i = 1; i <= 25; i++) {
-            runDay(i);
+            run(i);
         }
     }
 

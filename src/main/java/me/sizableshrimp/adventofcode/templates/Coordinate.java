@@ -8,6 +8,8 @@ package me.sizableshrimp.adventofcode.templates;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
+import java.util.Map;
+
 /**
  * A 2-dimensional coordinate object that holds an x and a y value.
  */
@@ -33,6 +35,10 @@ public class Coordinate {
             }
 
             return null;
+        }
+
+        public static Map<Character, Direction> getDirections(char up, char right, char down, char left) {
+            return Map.of(up, NORTH, right, EAST, down, SOUTH, left, WEST);
         }
     }
 
