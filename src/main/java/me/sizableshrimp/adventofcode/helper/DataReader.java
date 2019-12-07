@@ -121,20 +121,19 @@ public class DataReader {
         }
     }
 
-    private static void write(Path path, List<String> lines) {
-        new Thread(() -> {
-            Path parent = path.getParent();
-            try {
-                if (!Files.exists(parent))
-                    Files.createDirectory(parent);
-                Files.write(path, lines);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+    public static void write(Path path, List<String> lines) {
+        Path parent = path.getParent();
+        try {
+            if (!Files.exists(parent))
+                Files.createDirectory(parent);
+            //remove empty last line of input files
+            Files.writeString(path, String.join(System.lineSeparator(), lines));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static Path getBasePath(String filename) {
-        return Path.of("aoc_input").resolve(filename);
+    public static Path getBasePath(String filename) {
+        return Path.of("aoc_input", filename);
     }
 }
