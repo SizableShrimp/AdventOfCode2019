@@ -8,7 +8,7 @@ package me.sizableshrimp.adventofcode.days;
 import me.sizableshrimp.adventofcode.helper.LineConvert;
 import me.sizableshrimp.adventofcode.helper.Permutator;
 import me.sizableshrimp.adventofcode.templates.SeparatedDay;
-import me.sizableshrimp.adventofcode.use.Intcode;
+import me.sizableshrimp.adventofcode.intcode.Intcode;
 
 import java.util.ArrayList;
 import java.util.List;

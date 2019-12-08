@@ -3,7 +3,7 @@
  * This file is provided under version 3 of the GNU Lesser General Public License.
  */
 
-package me.sizableshrimp.adventofcode.use;
+package me.sizableshrimp.adventofcode.intcode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
