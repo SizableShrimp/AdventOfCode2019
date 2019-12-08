@@ -14,7 +14,7 @@ Part 1: 123
 Part 2: 456
 Completed in 0.5293s
 ```
-Note that "Completed in X.XXXXs" is not a real or accurate benchmark but my own hacky way to measure how long a day takes to run, approximately.
+Note that "Completed in X.XXXs" is not a real or accurate benchmark but my own hacky way to measure how long a day takes to run, approximately.
 If you would like to run a specific day outside the month of the December, use `run(int)` in the `Main` class.
 ### Information About Data Reader
 This program can optionally read input data for a specified day **directly from the Advent Of Code servers**.

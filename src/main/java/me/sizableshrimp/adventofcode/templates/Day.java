@@ -47,7 +47,7 @@ public abstract class Day {
         long after = System.nanoTime();
         System.out.println("Part 1: " + part1);
         System.out.println("Part 2: " + part2);
-        System.out.printf("Completed in %.4fs%n%n", (after - before) / 1_000_000_000f);
+        System.out.printf("Completed in %.3fs%n%n", (after - before) / 1_000_000_000f);
     }
 
     /**

@@ -39,11 +39,9 @@ public class Main {
     private static void run(int dayOfMonth) {
         try {
             Class<?> clazz = Class.forName(BASE_PACKAGE + "Day" + pad(dayOfMonth));
-            if (clazz == null)
-                return;
             System.out.println("Day " + dayOfMonth + ":");
             ((Day) clazz.getDeclaredConstructor().newInstance()).run();
-        } catch (Exception e) {
+        } catch (ClassNotFoundException ignored) {} catch (Exception e) {
             e.printStackTrace();
         }
     }
