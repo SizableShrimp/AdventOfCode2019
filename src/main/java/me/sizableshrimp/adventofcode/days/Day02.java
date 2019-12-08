@@ -17,11 +17,11 @@ public class Day02 extends SeparatedDay {
 
     @Override
     protected Object part1() {
-        List<Integer> instructions = new ArrayList<>(baseMemory);
-        instructions.set(1, 12);
-        instructions.set(2, 2);
-        Intcode.runInstruction(instructions, 0);
-        return instructions.get(0);
+        List<Integer> memory = new ArrayList<>(baseMemory);
+        memory.set(1, 12);
+        memory.set(2, 2);
+        new Intcode(memory).runInstruction();
+        return memory.get(0);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Day02 extends SeparatedDay {
                 List<Integer> memory = new ArrayList<>(baseMemory);
                 memory.set(1, noun);
                 memory.set(2, verb);
-                Intcode.runInstruction(memory, 0);
+                new Intcode(memory).runInstruction();
                 if (memory.get(0) == 1969_07_20) {
                     return 100 * noun + verb;
                 }

@@ -6,23 +6,23 @@
 package me.sizableshrimp.adventofcode.days;
 
 import me.sizableshrimp.adventofcode.helper.LineConvert;
-import me.sizableshrimp.adventofcode.templates.Day;
+import me.sizableshrimp.adventofcode.templates.SeparatedDay;
 import me.sizableshrimp.adventofcode.use.Intcode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day05 extends Day {
+public class Day05 extends SeparatedDay {
     List<Integer> baseMemory;
 
     @Override
-    protected void evaluate() {
-        List<Integer> memory = new ArrayList<>(baseMemory);
-        Intcode.runInstruction(memory, 1, 0);
-        setPart1(Intcode.getLastCode());
-        memory = new ArrayList<>(baseMemory);
-        Intcode.runInstruction(memory, 5, 0);
-        setPart2(Intcode.getLastCode());
+    public Object part1() {
+        return new Intcode(new ArrayList<>(baseMemory), 1).runInstruction();
+    }
+
+    @Override
+    public Object part2() {
+        return new Intcode(new ArrayList<>(baseMemory), 5).runInstruction();
     }
 
     @Override
