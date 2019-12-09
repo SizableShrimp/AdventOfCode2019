@@ -22,7 +22,10 @@ public class Main {
     private static final String BASE_PACKAGE = Main.class.getPackageName() + ".days.";
 
     public static void main(String[] args) {
-        run();
+        run(2);
+        run(5);
+        run(7);
+        run(9);
     }
 
     private static void run() {

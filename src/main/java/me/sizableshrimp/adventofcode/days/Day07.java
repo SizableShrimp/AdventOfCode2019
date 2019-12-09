@@ -17,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class Day07 extends SeparatedDay {
-    private List<Integer> baseMemory;
+    private List<Long> baseMemory;
 
     @Override
     protected Object part1() {
@@ -29,13 +29,13 @@ public class Day07 extends SeparatedDay {
         return compileResults(List.of(5, 6, 7, 8, 9), true);
     }
 
-    private int compileResults(List<Integer> basePhases, boolean loop) {
+    private long compileResults(List<Integer> basePhases, boolean loop) {
         return Permutator.permute(basePhases).parallelStream()
-                .mapToInt(phases -> runAmplifiers(phases, loop))
-                .max().getAsInt();
+                .mapToLong(phases -> runAmplifiers(phases, loop))
+                .max().getAsLong();
     }
 
-    private int runAmplifiers(List<Integer> phases, boolean loop) {
+    private long runAmplifiers(List<Integer> phases, boolean loop) {
         List<Amplifier> amps = getAmplifiers(phases, loop);
         Amplifier last = amps.get(amps.size() - 1);
         amps.forEach(Amplifier::start);
@@ -56,7 +56,7 @@ public class Day07 extends SeparatedDay {
             if (previous != null) {
                 previous.setOutput(amplifier);
             } else {
-                amplifier.in.add(0); //Amplifier A
+                amplifier.in.add(0L); //Amplifier A
             }
             previous = amplifier;
         }
@@ -67,14 +67,14 @@ public class Day07 extends SeparatedDay {
 
     @Override
     protected void parse() {
-        baseMemory = LineConvert.ints(lines.get(0));
+        baseMemory = LineConvert.longs(lines.get(0));
     }
 
     private static class Amplifier extends Thread {
         final Intcode intcode;
-        private final BlockingQueue<Integer> in = new LinkedBlockingQueue<>();
+        private final BlockingQueue<Long> in = new LinkedBlockingQueue<>();
 
-        Amplifier(List<Integer> memory, int phase) {
+        Amplifier(List<Long> memory, long phase) {
             intcode = new Intcode(memory, () -> {
                 try {
                     return in.poll(1, TimeUnit.MINUTES);

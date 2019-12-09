@@ -7,17 +7,15 @@ package me.sizableshrimp.adventofcode.intcode;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 
 @RequiredArgsConstructor
-public class IntArraySupplier implements IntSupplier {
-    private final int[] array;
+public class LongArraySupplier implements LongSupplier {
+    private final long[] array;
     private int index;
 
     @Override
-    public int getAsInt() {
-        if (index == array.length)
-            return array[array.length-1];
+    public long getAsLong() {
         return array[index++];
     }
 }
