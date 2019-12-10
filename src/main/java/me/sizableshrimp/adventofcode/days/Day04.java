@@ -31,16 +31,16 @@ public class Day04 extends SeparatedDay {
 
     private boolean passwordValid(int input) {
         String s = String.valueOf(input);
-        char[] chars = s.toCharArray();
-        char previous = chars[0];
+        int[] ints = s.chars().map(c -> c - '0').toArray();
+        int previous = ints[0];
         List<Integer> doubles = new ArrayList<>();
-        for (int i = 1; i < chars.length; i++) {
-            char c = chars[i];
-            if (previous == c)
+        for (int i = 1; i < ints.length; i++) {
+            int num = ints[i];
+            if (previous == num)
                 doubles.add(i - 1);
-            if (toInt(c) < toInt(previous))
+            if (num < previous)
                 return false;
-            previous = c;
+            previous = num;
         }
         if (remove)
             removeInvalid(doubles, s);
@@ -64,10 +64,6 @@ public class Day04 extends SeparatedDay {
             }
         }
         doubles.removeAll(remove);
-    }
-
-    private int toInt(char c) {
-        return Integer.parseInt(Character.toString(c));
     }
 
     @Override

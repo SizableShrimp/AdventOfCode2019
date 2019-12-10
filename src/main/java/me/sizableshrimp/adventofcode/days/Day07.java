@@ -17,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class Day07 extends SeparatedDay {
-    private List<Long> baseMemory;
+    List<Long> baseMemory = LineConvert.longs(lines.get(0));
 
     @Override
     protected Object part1() {
@@ -63,11 +63,6 @@ public class Day07 extends SeparatedDay {
         if (loop)
             amplifiers.get(amplifiers.size() - 1).setOutput(amplifiers.get(0));
         return amplifiers;
-    }
-
-    @Override
-    protected void parse() {
-        baseMemory = LineConvert.longs(lines.get(0));
     }
 
     private static class Amplifier extends Thread {

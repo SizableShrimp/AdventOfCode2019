@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Day05 extends SeparatedDay {
-    List<Long> baseMemory;
+    List<Long> baseMemory = LineConvert.longs(lines.get(0));
 
     @Override
     public Object part1() {
@@ -23,10 +23,5 @@ public class Day05 extends SeparatedDay {
     @Override
     public Object part2() {
         return new Intcode(new ArrayList<>(baseMemory), 5).runInstruction();
-    }
-
-    @Override
-    protected void parse() {
-        baseMemory = LineConvert.longs(lines.get(0));
     }
 }

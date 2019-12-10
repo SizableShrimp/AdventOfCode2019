@@ -13,16 +13,15 @@ import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 @RequiredArgsConstructor
 @Getter
 public class Intcode {
-    private final Map<Integer, Long> memory;
+    private final List<Long> memory;
     private long pointer;
     @Setter
     private long relativeBase;
@@ -31,10 +30,6 @@ public class Intcode {
     private final LongSupplier in;
     @Setter
     private LongConsumer out = i -> {};
-
-    public Intcode(List<Long> memory, LongSupplier in) {
-        this(IntStream.range(0, memory.size()).boxed().collect(Collectors.toMap(i -> i, memory::get)), in);
-    }
 
     public Intcode(List<Long> memory) {
         this(memory, () -> 0);
@@ -90,11 +85,13 @@ public class Intcode {
     }
 
     public long getMemory(long index) {
-        return memory.computeIfAbsent((int) index, i -> 0L);
+        memory.addAll(LongStream.rangeClosed(0, index - memory.size()).mapToObj(l -> 0L).collect(Collectors.toList()));
+        return memory.get((int) index);
     }
 
     public void setMemory(long index, long value) {
-        memory.put((int) index, value);
+        memory.addAll(LongStream.rangeClosed(0, index - memory.size()).mapToObj(l -> 0L).collect(Collectors.toList()));
+        memory.set((int) index, value);
     }
 
     @Value

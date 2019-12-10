@@ -63,7 +63,7 @@ public class Coordinate {
      *
      * @return The Manhattan distance from this coordinate to (0, 0).
      */
-    public int distance() {
+    public int distanceZero() {
         return distance(0, 0);
     }
 

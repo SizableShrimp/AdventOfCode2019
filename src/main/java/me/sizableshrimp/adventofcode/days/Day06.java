@@ -18,12 +18,15 @@ public class Day06 extends SeparatedDay {
     private static class Node {
         final String planet;
         Node orbits;
-        int depth = -1;
+        int count = -1;
 
         private int countIndirect() {
-            if (depth == -1)
-                depth = Math.max(parents("COM").size() - 1, 0);
-            return depth;
+            if (count != -1)
+                return count;
+            if (planet.equals("COM"))
+                return -1;
+            count = orbits.countIndirect() + 1;
+            return count;
         }
 
         private List<Node> parents(String target) {
