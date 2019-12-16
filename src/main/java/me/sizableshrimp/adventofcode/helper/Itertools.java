@@ -8,7 +8,9 @@ package me.sizableshrimp.adventofcode.helper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -75,6 +77,15 @@ public class Itertools {
             }
             result.add(yield(pool, indices));
         }
+    }
+
+    public static <T> Set<List<T>> combinationsDistinct(Collection<T> collection, int r) {
+        List<List<T>> combos = combinations(collection, r);
+        Set<List<T>> results = new HashSet<>();
+        for (List<T> combo : combos) {
+            results.add(combo.stream().distinct().collect(Collectors.toList()));
+        }
+        return results;
     }
 
     private static <T> List<T> yield(List<T> pool, int[] indices) {
