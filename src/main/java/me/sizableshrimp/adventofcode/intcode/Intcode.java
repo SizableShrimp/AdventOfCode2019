@@ -134,4 +134,15 @@ public class Intcode {
             }
         }
     }
+
+    @RequiredArgsConstructor
+    private static class LongArraySupplier implements LongSupplier {
+        private final long[] array;
+        private int index;
+
+        @Override
+        public long getAsLong() {
+            return array[index++];
+        }
+    }
 }
