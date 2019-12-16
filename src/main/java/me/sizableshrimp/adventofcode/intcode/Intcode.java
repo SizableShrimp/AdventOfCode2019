@@ -27,12 +27,19 @@ public class Intcode {
     private long relativeBase;
     @Setter
     private long lastCode;
-    private final LongSupplier in;
+    @Setter
+    private LongSupplier in = () -> 0;
     @Setter
     private LongConsumer out = i -> {};
 
-    public Intcode(List<Long> memory) {
-        this(memory, () -> 0);
+    public Intcode(List<Long> memory, LongSupplier in) {
+        this(memory);
+        this.in = in;
+    }
+
+    public Intcode(List<Long> memory, LongSupplier in, LongConsumer out) {
+        this(memory, in);
+        this.out = out;
     }
 
     public Intcode(List<Long> memory, long... in) {

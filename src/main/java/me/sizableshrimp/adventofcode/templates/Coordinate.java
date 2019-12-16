@@ -15,11 +15,12 @@ import java.util.Map;
  */
 @Value
 public class Coordinate {
+    public static final Coordinate ZERO = new Coordinate(0, 0);
     public final int x, y;
 
     @AllArgsConstructor
     public enum Direction {
-        NORTH(0, 0, 1), EAST(90, 1, 0), SOUTH(180, 0, -1), WEST(270, -1, 0);
+        NORTH(0, 0, -1), EAST(90, 1, 0), SOUTH(180, 0, 1), WEST(270, -1, 0);
 
         public int degrees;
         public int x;
@@ -34,11 +35,15 @@ public class Coordinate {
                     return direction;
             }
 
-            return null;
+            return Direction.NORTH;
         }
 
         public static Map<Character, Direction> getDirections(char up, char right, char down, char left) {
             return Map.of(up, NORTH, right, EAST, down, SOUTH, left, WEST);
+        }
+
+        public Direction opposite() {
+            return values()[(ordinal() + 2) % values().length];
         }
     }
 
@@ -52,6 +57,10 @@ public class Coordinate {
      */
     public Coordinate resolve(int x, int y) {
         return new Coordinate(this.x + x, this.y + y);
+    }
+
+    public Coordinate resolve(Coordinate other) {
+        return resolve(other.x, other.y);
     }
 
     public Coordinate resolve(Direction direction) {
@@ -85,7 +94,7 @@ public class Coordinate {
      * @return The Manhattan distance from this coordinate to the other coordinate specified.
      */
     public int distance(Coordinate other) {
-        return Math.abs(x - other.x) + Math.abs(y - other.y);
+        return distance(other.x, other.y);
     }
 
     /**
@@ -103,6 +112,6 @@ public class Coordinate {
 
     @Override
     public String toString() {
-        return "(" + x + "," + y + ")";
+        return String.format("(%d,%d)", x, y);
     }
 }
