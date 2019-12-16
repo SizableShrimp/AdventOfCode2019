@@ -32,7 +32,7 @@ public class Day03 extends Day {
     }
 
     private void wire(List<Coordinate> wire, String line) {
-        Coordinate previous = new Coordinate(0, 0);
+        Coordinate previous = Coordinate.ZERO;
         for (String s : line.split(",")) {
             previous = map(wire, previous, s);
         }
