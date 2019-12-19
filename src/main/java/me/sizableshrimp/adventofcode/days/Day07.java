@@ -77,7 +77,7 @@ public class Day07 extends SeparatedDay {
                     e.printStackTrace();
                     return 0;
                 }
-            });
+            }, Intcode.DEFAULT_OUT);
             in.add(phase);
         }
 

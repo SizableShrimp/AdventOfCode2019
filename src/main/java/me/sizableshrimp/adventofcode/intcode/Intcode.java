@@ -5,6 +5,7 @@
 
 package me.sizableshrimp.adventofcode.intcode;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,27 +24,25 @@ import java.util.stream.LongStream;
 public class Intcode {
     private final List<Long> memory;
     private long pointer;
-    @Setter
+    @Setter(AccessLevel.PACKAGE)
     private long relativeBase;
-    @Setter
+    @Setter(AccessLevel.PACKAGE)
     private long lastCode;
+    public static final LongSupplier DEFAULT_IN = () -> 0;
+    public static final LongConsumer DEFAULT_OUT = i -> {};
     @Setter
-    private LongSupplier in = () -> 0;
+    private LongSupplier in;
     @Setter
-    private LongConsumer out = i -> {};
-
-    public Intcode(List<Long> memory, LongSupplier in) {
-        this(memory);
-        this.in = in;
-    }
+    private LongConsumer out;
 
     public Intcode(List<Long> memory, LongSupplier in, LongConsumer out) {
-        this(memory, in);
+        this.memory = memory;
+        this.in = in;
         this.out = out;
     }
 
     public Intcode(List<Long> memory, long... in) {
-        this(memory, new LongArraySupplier(in));
+        this(memory, new LongArraySupplier(in), DEFAULT_OUT);
     }
 
     public long runInstruction() {
