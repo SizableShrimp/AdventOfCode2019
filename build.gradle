@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'me.sizableshrimp.adventofcode2019'
+version '0.1.0'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    implementation 'one.util:streamex:0.8.1'
+}

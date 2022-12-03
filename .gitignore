@@ -1,13 +1,25 @@
-# Intellij
+# IntelliJ
 .idea/
 *.iml
 *.iws
 *.ipr
+out/
+generated/
+generated_tests/
 
-# Maven
-log/
-target/
-dependency-reduced-pom.xml
+# Eclipse
+bin/
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
-#AOC
+# Gradle
+.gradle/
+build/
+
+# AOC
 aoc_input/
+session.txt
+run/
