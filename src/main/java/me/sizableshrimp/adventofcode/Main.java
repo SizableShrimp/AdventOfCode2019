@@ -33,21 +33,21 @@ import java.time.ZoneId;
 public class Main {
     /**
      * The hardcoded Advent Of Code year.
-     * This year integer is only used for retrieving data from the AOC servers with {@link DataReader#read}.
-     * Otherwise, it is useless.
+     * This year integer is used for retrieving data from the AOC servers with {@link DataReader#read}
+     * and running a day during the competition.
      */
     public static final int YEAR = 2019;
     private static final String BASE_PACKAGE = Main.class.getPackageName() + ".days.";
 
     public static void main(String[] args) {
-        run();
+        run(10);
     }
 
     private static void run() {
         LocalDateTime time = LocalDateTime.now(ZoneId.of("America/New_York"));
         int dayOfMonth = time.getDayOfMonth();
 
-        if (time.getMonth() == Month.DECEMBER && dayOfMonth <= 25) {
+        if (time.getYear() == YEAR && time.getMonth() == Month.DECEMBER && dayOfMonth <= 25) {
             run(dayOfMonth);
         } else {
             runAll();

@@ -21,43 +21,43 @@
  * SOFTWARE.
  */
 
-package me.sizableshrimp.adventofcode.helper;
+package me.sizableshrimp.adventofcode.days;
+
+import me.sizableshrimp.adventofcode.helper.LineConvert;
+import me.sizableshrimp.adventofcode.intcode.Intcode;
+import me.sizableshrimp.adventofcode.templates.SeparatedDay;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class Permutator {
-    /**
-     * Permutes the input list into a set of all possible permutations.
-     *
-     * @param input The input list.
-     * @param <T> The type of the list used when permuting.
-     * @return A set of all possible permutations of the input list.
-     */
-    public static <T> Set<List<T>> permute(List<T> input) {
-        return internalPermute(new ArrayList<>(input));
+public class Day21 extends SeparatedDay {
+    List<Long> baseMemory = LineConvert.longs(lines.get(0));
+    long result;
+
+    @Override
+    protected Object part1() {
+        return runInstructions(List.of("NOT B J", "NOT C T", "OR T J", "AND D J", "NOT A T", "OR T J", "WALK"));
     }
 
-    private static <T> Set<List<T>> internalPermute(List<T> base) {
-        if (base.isEmpty()) {
-            Set<List<T>> perms = new HashSet<>();
-            perms.add(new ArrayList<>());
-            return perms;
-        }
+    @Override
+    protected Object part2() {
+        return runInstructions(List.of("NOT B J", "NOT C T", "OR T J", "AND D J", "AND H J", "NOT A T", "OR T J", "RUN"));
+    }
 
-        T first = base.remove(0);
-        Set<List<T>> result = new HashSet<>();
-        Set<List<T>> permutations = internalPermute(base);
-        for (var list : permutations) {
-            for (int i = 0; i <= list.size(); i++) {
-                List<T> temp = new ArrayList<>(list);
-                temp.add(i, first);
-                result.add(temp);
-            }
-        }
+    private long runInstructions(List<String> ascii) {
+        Intcode ic = new Intcode(new ArrayList<>(baseMemory), ascii);
+        ic.setOut(this::in);
+        ic.runInstruction();
 
         return result;
+    }
+
+    void in(long in) {
+        char c = (char) in;
+        if (Character.toString(c).matches("\\p{ASCII}*")) {
+            // System.out.print(c);
+        } else {
+            result = in;
+        }
     }
 }

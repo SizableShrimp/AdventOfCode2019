@@ -26,6 +26,7 @@ package me.sizableshrimp.adventofcode.templates;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -34,15 +35,19 @@ import java.util.Map;
 @Value
 public class Coordinate {
     public static final Coordinate ZERO = new Coordinate(0, 0);
-    public final int x, y;
+    public int x, y;
 
+    /**
+     * The four cardinal directions, associated with degrees and relative x, y positions
+     * where NORTH is at 0 degrees and a relative x,y of (0,-1).
+     */
     @AllArgsConstructor
     public enum Direction {
         NORTH(0, 0, -1), EAST(90, 1, 0), SOUTH(180, 0, 1), WEST(270, -1, 0);
 
-        public int degrees;
-        public int x;
-        public int y;
+        public final int degrees;
+        public final int x;
+        public final int y;
 
         public static Direction getDirection(int degrees) {
             if (degrees < 0)
@@ -116,6 +121,28 @@ public class Coordinate {
     }
 
     /**
+     * Finds the relative {@link Direction Direction} needed to get from this coordinate to the other coordinate specified.
+     * Returns null if the two coordinates are not within one tile in cardinal directions away.
+     *
+     * @param other Another coordinate used to find the relative direction towards.
+     * @return The {@link Direction Direction} needed to move from this coordinate to the other coordinate specified,
+     * or null if this is not possible in one move in cardinal directions.
+     */
+    public Direction relative(Coordinate other) {
+        return Arrays.stream(Direction.values()).filter(d -> resolve(d).equals(other)).findAny().orElse(null);
+    }
+
+    /**
+     * Checks if both x and y values are in the range 0, inclusive, to {@code size}, exclusive.
+     *
+     * @param size The size dimensions to check.
+     * @return Whether both x and y values fit the constraints of the range.
+     */
+    public boolean isValid(int size) {
+        return this.x >= 0 && this.x < size && this.y >= 0 && this.y < size;
+    }
+
+    /**
      * Parses a coordinate in the format "x,y".
      *
      * @param coord The input string of which to parse a coordinate.
@@ -131,5 +158,9 @@ public class Coordinate {
     @Override
     public String toString() {
         return String.format("(%d,%d)", x, y);
+    }
+
+    public boolean equals(int x, int y) {
+        return this.x == x && this.y == y;
     }
 }

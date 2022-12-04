@@ -38,14 +38,16 @@ import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 @RequiredArgsConstructor
-@Getter
+@Getter(AccessLevel.PACKAGE)
 public class Intcode {
     private final List<Long> memory;
     private long pointer;
     @Setter(AccessLevel.PACKAGE)
     private long relativeBase;
     @Setter(AccessLevel.PACKAGE)
+    @Getter
     private long lastCode;
+    private boolean exit;
     public static final LongSupplier DEFAULT_IN = () -> 0;
     public static final LongConsumer DEFAULT_OUT = i -> {};
     @Setter
@@ -63,23 +65,29 @@ public class Intcode {
         this(memory, new LongArraySupplier(in), DEFAULT_OUT);
     }
 
-    public long runInstruction() {
-        while (true) {
-            Instruction instruction = parseInstruction((int) getMemory(pointer));
-            if (instruction.opcode == OpCode.EXIT)
-                return lastCode;
-            pointer = calculate(instruction);
-        }
+    public Intcode(List<Long> memory, List<String> asciiInput) {
+        this(memory, new StringSupplier(String.join("\n", asciiInput) + "\n"), DEFAULT_OUT);
     }
 
-    public long calculate(Instruction instruction) {
+    public long runInstruction() {
+        exit = false;
+        while (!exit) {
+            Instruction instruction = parseInstruction((int) getMemory(pointer));
+            if (instruction.opcode == OpCode.EXIT)
+                break;
+            pointer = calculate(instruction);
+        }
+        return lastCode;
+    }
+
+    long calculate(Instruction instruction) {
         long next = instruction.opcode.apply(this, instruction);
         if (next == -1)
             next = pointer + instruction.opcode.parameters + 1;
         return next;
     }
 
-    public Instruction parseInstruction(int code) {
+    Instruction parseInstruction(int code) {
         OpCode opcode = OpCode.getOpCode(code % 100);
         List<ParameterMode> modes = new ArrayList<>();
         for (int i = 1; i <= opcode.parameters; i++) {
@@ -89,7 +97,7 @@ public class Intcode {
         return new Instruction(opcode, List.copyOf(getParams(opcode, modes)));
     }
 
-    public List<Long> getParams(OpCode opcode, List<ParameterMode> modes) {
+    List<Long> getParams(OpCode opcode, List<ParameterMode> modes) {
         long[] values = getValues(opcode);
         List<Long> result = new ArrayList<>();
         for (int i = 0; i < values.length; i++) {
@@ -100,7 +108,7 @@ public class Intcode {
         return result;
     }
 
-    public long[] getValues(OpCode opcode) {
+    long[] getValues(OpCode opcode) {
         long[] values = new long[opcode.parameters];
         for (int i = 0; i < values.length; i++) {
             values[i] = getMemory(pointer + i + 1);
@@ -118,14 +126,18 @@ public class Intcode {
         memory.set((int) index, value);
     }
 
+    public void exit() {
+        exit = true;
+    }
+
     @Value
-    public static class Instruction {
+    static class Instruction {
         OpCode opcode;
         List<Long> params;
     }
 
     @AllArgsConstructor
-    public enum ParameterMode {
+    private enum ParameterMode {
         POSITION_MODE(0), IMMEDIATE_MODE(1), RELATIVE_MODE(2);
 
         int id;
@@ -139,16 +151,11 @@ public class Intcode {
         }
 
         public long getLongFromMode(long input, Intcode ic, boolean set) {
-            switch (this) {
-                case POSITION_MODE:
-                    return set ? input : ic.getMemory(input);
-                case IMMEDIATE_MODE:
-                    return input;
-                case RELATIVE_MODE:
-                    return set ? input + ic.getRelativeBase() : ic.getMemory(ic.getRelativeBase() + input);
-                default:
-                    throw new IllegalArgumentException();
-            }
+            return switch (this) {
+                case POSITION_MODE -> set ? input : ic.getMemory(input);
+                case IMMEDIATE_MODE -> input;
+                case RELATIVE_MODE -> set ? input + ic.getRelativeBase() : ic.getMemory(ic.getRelativeBase() + input);
+            };
         }
     }
 
@@ -160,6 +167,17 @@ public class Intcode {
         @Override
         public long getAsLong() {
             return array[index++];
+        }
+    }
+
+    @RequiredArgsConstructor
+    private static class StringSupplier implements LongSupplier {
+        private final String string;
+        private int index;
+
+        @Override
+        public long getAsLong() {
+            return string.charAt(index++);
         }
     }
 }

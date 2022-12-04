@@ -33,14 +33,13 @@ import me.sizableshrimp.adventofcode.templates.ZCoordinate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Day12 extends SeparatedDay {
     List<Moon> baseMoons = new ArrayList<>();
     List<Moon> moons;
-    Set<List<Moon>> pairs;
+    List<List<Moon>> pairs;
 
     @Override
     protected Object part1() {
@@ -78,7 +77,7 @@ public class Day12 extends SeparatedDay {
 
     void setup() {
         moons = baseMoons.stream().map(Moon::copy).collect(Collectors.toList());
-        pairs = Itertools.combinationsDistinct(moons, 2);
+        pairs = Itertools.combinations(moons, 2);
     }
 
     void timeStep() {

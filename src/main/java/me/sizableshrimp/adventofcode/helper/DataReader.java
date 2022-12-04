@@ -144,7 +144,7 @@ public class DataReader {
         try {
             if (!Files.exists(parent))
                 Files.createDirectory(parent);
-            //remove empty last line of input files
+            // Remove empty last line of input files
             Files.writeString(path, String.join(System.lineSeparator(), lines));
         } catch (IOException e) {
             e.printStackTrace();

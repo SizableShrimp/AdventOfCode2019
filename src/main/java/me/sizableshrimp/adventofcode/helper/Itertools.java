@@ -26,9 +26,7 @@ package me.sizableshrimp.adventofcode.helper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -70,12 +68,24 @@ public class Itertools {
         return result;
     }
 
+    /**
+     * Returns a List of combinations of the input collection, where each combination is of length r and sorted by
+     * lexicographic order.
+     *
+     * @param collection The collection of elements to create combinations of.
+     * @param r The size of each combination.
+     * @param <T> The type of element in the input collection.
+     * @return A List of combinations of the input collection, where each combination is of length r and sorted by
+     * lexicographic order.
+     * @see
+     * <a href=https://docs.python.org/2/library/itertools.html#itertools.combinations>Python itertools.combinations</a>
+     */
     public static <T> List<List<T>> combinations(Collection<T> collection, int r) {
         List<List<T>> result = new ArrayList<>();
         List<T> pool = new ArrayList<>(collection);
         int n = pool.size();
         int[] indices = IntStream.range(0, r).toArray();
-        result.add(yield(pool, indices));
+        result.add(yieldResult(pool, indices));
         while (true) {
             boolean broke = false;
             int last = 0;
@@ -93,20 +103,11 @@ public class Itertools {
             for (Integer j : IntStream.range(last + 1, r).boxed().collect(Collectors.toList())) {
                 indices[j] = indices[j - 1] + 1;
             }
-            result.add(yield(pool, indices));
+            result.add(yieldResult(pool, indices));
         }
     }
 
-    public static <T> Set<List<T>> combinationsDistinct(Collection<T> collection, int r) {
-        List<List<T>> combos = combinations(collection, r);
-        Set<List<T>> results = new HashSet<>();
-        for (List<T> combo : combos) {
-            results.add(combo.stream().distinct().collect(Collectors.toList()));
-        }
-        return results;
-    }
-
-    private static <T> List<T> yield(List<T> pool, int[] indices) {
+    private static <T> List<T> yieldResult(List<T> pool, int[] indices) {
         List<T> result = new ArrayList<>();
         for (int index : indices) {
             result.add(pool.get(index));
